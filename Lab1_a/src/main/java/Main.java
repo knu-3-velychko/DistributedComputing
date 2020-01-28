@@ -25,6 +25,5 @@ public class Main extends Application {
         primaryStage.setTitle("Distributed Computations - Lab1-a");
         primaryStage.setScene(scene);
         primaryStage.show();
-
     }
 }
