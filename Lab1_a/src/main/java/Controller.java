@@ -2,8 +2,6 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-import java.util.TreeMap;
-
 public class Controller {
     @FXML
     private Slider slider;
@@ -43,17 +41,16 @@ public class Controller {
         return new Thread(() -> {
             while (flag) {
                 Thread.yield();
+                if ((int) position < (int) targetPosition)
+                    position++;
+                else
+                    position--;
                 Platform.runLater(() -> {
-                    position=slider.getValue();
-                    if ((int) position < (int) targetPosition)
-                        position++;
-                    else
-                        position--;
                     slider.setValue(position);
                     sliderValue.setText(Double.toString(position));
                 });
                 try {
-                    Thread.sleep(5);
+                    Thread.sleep(10);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -79,12 +76,15 @@ public class Controller {
         if (thread1 == null || thread2 == null || !thread1.isAlive() || !thread2.isAlive()){
             initializeThreads();
             button.setText("Stop");
+            position=slider.getValue();
+            slider.setDisable(true);
             thread1.start();
             thread2.start();
             flag = true;
         }
         else {
             button.setText("Start");
+            slider.setDisable(false);
             flag=false;
         }
     }
