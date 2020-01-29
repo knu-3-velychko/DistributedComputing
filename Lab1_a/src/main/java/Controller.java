@@ -9,8 +9,14 @@ public class Controller {
     private Spinner<Integer> priorityThread1, priorityThread2;
     @FXML
     private Label sliderValue;
+    @FXML
+    private Button button;
 
     private Thread thread1, thread2;
+
+    private double position=50.0;
+
+    private volatile boolean flag = true;
 
     @FXML
     private void initialize() {
@@ -20,6 +26,9 @@ public class Controller {
                 new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 10, 5));
 
         slider.setValue(50.0);
+        slider.setBlockIncrement(1.0d);
+        slider.setMax(100.0d);
+        slider.setMin(0.0d);
 
         initializeThreads();
     }
@@ -30,28 +39,41 @@ public class Controller {
     }
 
     private void initializeThreads() {
-        thread1 = new Thread(
-                () -> {
-                    while (true) {
-                        Thread.yield();
-                        if (slider.getValue() > 10)Platform.runLater(()
-                                slider.setValue(slider.getValue()-1.0);
-                                sliderValue.setText(Double.toString(slider.getValue()));
-                            }
-                    }
+        thread1 = new Thread(() -> {
+            while (flag) {
+                Thread.yield();
+                Platform.runLater(() -> {
+                    if (position < 10.0)
+                        position++;
+                    else
+                        position--;
+                    sliderValue.setText(Double.toString(position));
                 });
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
-        thread2 = new Thread(
-                () -> {
-                    while (true) {
-                        Thread.yield();
-                        if (slider.getValue() < 90)
-                            Platform.runLater(() -> {
-                                slider.setValue(slider.getValue()+1.0);
-                                sliderValue.setText(Double.toString(slider.getValue()));
-                            });
-                    }
+        thread2 = new Thread(() -> {
+            while (flag) {
+                Thread.yield();
+                Platform.runLater(() -> {
+                    if (position < 90.0)
+                        position++;
+                    else
+                        position--;
+                    sliderValue.setText(Double.toString(position));
                 });
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
         thread1.setDaemon(true);
         thread2.setDaemon(true);
@@ -64,9 +86,16 @@ public class Controller {
     }
 
     private void startThreads() {
-        if(!thread1.isAlive())
+        if (thread1.isAlive() && thread2.isAlive()) {
+            button.setText("Start");
+            flag=false;
+        } else {
+            initializeThreads();
+            button.setText("Stop");
             thread1.start();
-        if(!thread2.isAlive())
             thread2.start();
+            flag=true;
+        }
     }
+
 }

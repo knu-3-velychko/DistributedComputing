@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="260.0" prefWidth="353.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+    <Label fx:id="message" layoutX="124.0" layoutY="50.0" />
+    <Label fx:id="sliderValue" layoutX="171.5" layoutY="120.0" text="50.0" />
+    <Slider fx:id="slider" layoutX="107.0" layoutY="100.0" />
+    <Button fx:id="start1" layoutX="14.0" layoutY="179.0" mnemonicParsing="false" onAction="#startThreadOne" text="Start1" />
+    <Button fx:id="start2" layoutX="190.0" layoutY="179.0" mnemonicParsing="false" onAction="#startThreadTwo" text="Start2" />
+    <Button fx:id="stop1" layoutX="80.0" layoutY="179.0" mnemonicParsing="false" onAction="#stopThreadOne" text="Stop1" />
+    <Button fx:id="stop2" layoutX="256.0" layoutY="179.0" mnemonicParsing="false" onAction="#stopThreadTwo" text="Stop2" />
+</AnchorPane>

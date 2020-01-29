@@ -9,7 +9,7 @@
     <Label layoutX="190.0" layoutY="64.0" text="Second thread priority"/>
     <Spinner fx:id="priorityThread1" layoutX="14.0" layoutY="88.0"/>
     <Spinner fx:id="priorityThread2" layoutX="190.0" layoutY="88.0"/>
-    <Label fx:id="sliderValue" layoutX="171.5" layoutY="150.0" text="0"/>
+    <Label fx:id="sliderValue" layoutX="171.5" layoutY="150.0" text="50.0"/>
     <Slider fx:id="slider" layoutX="107.0" layoutY="140.0"/>
-    <Button layoutX="151.0" layoutY="179.0" mnemonicParsing="false" onAction="#onClick" text="Start"/>
+    <Button fx:id="button" layoutX="151.0" layoutY="179.0" mnemonicParsing="false" onAction="#onClick" text="Start"/>
 </AnchorPane>
