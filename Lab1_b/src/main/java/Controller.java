@@ -16,7 +16,7 @@ public class Controller {
 
     private Thread thread1, thread2;
 
-    private int semafore = 0;
+    private volatile int semaphore = 0;
     private double position = 50.0;
 
     @FXML
@@ -26,76 +26,46 @@ public class Controller {
         slider.setMax(100.0d);
         slider.setMin(0.0d);
 
-        initializeThreads();
+        setUpButtons(false, false, true, true);
     }
 
     @FXML
     public void startThreadOne() {
-        initializeThreads();
+        thread1 = initializeThread(1, "Second thread is running.", 10.0, false, true);
+        thread1.setDaemon(true);
+        thread1.setPriority(1);
         thread1.start();
     }
 
     @FXML
     public void startThreadTwo() {
-        initializeThreads();
+        thread2 = initializeThread(2, "First thread is running.", 90.0, true, false);
+        thread2.setDaemon(true);
+        thread2.setPriority(10);
         thread2.start();
     }
 
     @FXML
     public void stopThreadOne() {
-        semafore = 0;
+        semaphore = 0;
     }
 
     @FXML
     public void stopThreadTwo() {
-        semafore = 0;
+        semaphore = 0;
     }
 
-    private void initializeThreads() {
-        if (thread1 == null || !thread1.isAlive())
-            thread1 = new Thread(() -> {
-                if (semafore == 0)
-                    semafore = 1;
-                if (semafore == 2)
-                    message.setText("Second thread is running");
-                if (semafore == 1) {
-                    start2.setDisable(true);
-                    stop2.setDisable(true);
-                    while (position != 10 && semafore==1) {
-                        Thread.yield();
-                        if (position < 10.0)
-                            position++;
-                        else
-                            position--;
-                        Platform.runLater(() ->
-                        {
-                            sliderValue.setText(String.valueOf(position));
-                            slider.setValue(position);
-                        });
-                        try {
-                            Thread.sleep(100);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    semafore = 0;
-                    start2.setDisable(false);
-                    stop2.setDisable(false);
-                }
-            });
-
-        if (thread2 == null || !thread2.isAlive())
-            thread2 = new Thread(() -> {
-            if (semafore == 0)
-                semafore = 2;
-            if (semafore == 1)
-                message.setText("First thread is running");
-            if (semafore == 2) {
-                start1.setDisable(true);
-                stop1.setDisable(true);
-                while (position != 90 && semafore==2) {
+    private Thread initializeThread(int semaphoreValue, String messageText, double targetPosition, boolean disabledStop1, boolean disabledStop2) {
+        return new Thread(() -> {
+            if (semaphore == 0)
+                semaphore = semaphoreValue;
+            else if (semaphore != semaphoreValue)
+                message.setText(messageText);
+            if (semaphore == semaphoreValue) {
+                setUpButtons(true, true, disabledStop1, disabledStop2);
+                while ((int) position != (int) targetPosition && semaphore != 0) {
                     Thread.yield();
-                    if (position < 90.0)
+                    if (position < targetPosition)
                         position++;
                     else
                         position--;
@@ -110,16 +80,16 @@ public class Controller {
                         e.printStackTrace();
                     }
                 }
-                semafore = 0;
-                start1.setDisable(false);
-                stop1.setDisable(false);
+                semaphore = 0;
+                setUpButtons(false, false, false, false);
             }
         });
+    }
 
-        thread1.setDaemon(true);
-        thread2.setDaemon(true);
-
-        thread1.setPriority(1);
-        thread2.setPriority(10);
+    private void setUpButtons(boolean disabledStart1, boolean disabledStart2, boolean disabledStop1, boolean disabledStop2) {
+        start1.setDisable(disabledStart1);
+        start2.setDisable(disabledStart2);
+        stop1.setDisable(disabledStop1);
+        stop2.setDisable(disabledStop2);
     }
 }

@@ -2,6 +2,8 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import java.util.TreeMap;
+
 public class Controller {
     @FXML
     private Slider slider;
@@ -14,7 +16,7 @@ public class Controller {
 
     private Thread thread1, thread2;
 
-    private double position=50.0;
+    private double position = 50.0;
 
     private volatile boolean flag = true;
 
@@ -30,7 +32,6 @@ public class Controller {
         slider.setMax(100.0d);
         slider.setMin(0.0d);
 
-        initializeThreads();
     }
 
     @FXML
@@ -38,42 +39,29 @@ public class Controller {
         startThreads();
     }
 
-    private void initializeThreads() {
-        thread1 = new Thread(() -> {
+    private Thread initializeThread(double targetPosition) {
+        return new Thread(() -> {
             while (flag) {
                 Thread.yield();
                 Platform.runLater(() -> {
-                    if (position < 10.0)
+                    if ((int) position < (int) targetPosition)
                         position++;
                     else
                         position--;
                     sliderValue.setText(Double.toString(position));
                 });
                 try {
-                    Thread.sleep(10);
+                    Thread.sleep(5);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
         });
+    }
 
-        thread2 = new Thread(() -> {
-            while (flag) {
-                Thread.yield();
-                Platform.runLater(() -> {
-                    if (position < 90.0)
-                        position++;
-                    else
-                        position--;
-                    sliderValue.setText(Double.toString(position));
-                });
-                try {
-                    Thread.sleep(10);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+    private void initializeThreads() {
+        thread1 = initializeThread(10.0);
+        thread2 = initializeThread(90.0);
 
         thread1.setDaemon(true);
         thread2.setDaemon(true);
@@ -86,15 +74,16 @@ public class Controller {
     }
 
     private void startThreads() {
-        if (thread1.isAlive() && thread2.isAlive()) {
-            button.setText("Start");
-            flag=false;
-        } else {
+        if (thread1 == null || thread2 == null || !thread1.isAlive() || !thread2.isAlive()){
             initializeThreads();
             button.setText("Stop");
             thread1.start();
             thread2.start();
-            flag=true;
+            flag = true;
+        }
+        else {
+            button.setText("Start");
+            flag=false;
         }
     }
 
