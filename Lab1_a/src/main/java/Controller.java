@@ -44,10 +44,12 @@ public class Controller {
             while (flag) {
                 Thread.yield();
                 Platform.runLater(() -> {
+                    position=slider.getValue();
                     if ((int) position < (int) targetPosition)
                         position++;
                     else
                         position--;
+                    slider.setValue(position);
                     sliderValue.setText(Double.toString(position));
                 });
                 try {
