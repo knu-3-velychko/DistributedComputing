@@ -64,9 +64,12 @@ func findBear(id int, waitGroup *sync.WaitGroup, regions <-chan []bool, bearFoun
 }
 
 func main() {
-	var (
-		n       = 100
-		m       = 100
+	const (
+		//n is number of rows
+		n = 100
+		//n is number of rows
+		m = 100
+		//beesNum is number of bees
 		beesNum = 4
 	)
 	forestMatrix := setUpMatrix(n, m)
