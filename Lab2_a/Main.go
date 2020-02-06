@@ -21,6 +21,7 @@ func setUpMatrix(n, m int) [][]bool {
 	)
 
 	matrix[x][y] = true
+	fmt.Println(matrix)
 	return matrix
 }
 
@@ -55,6 +56,7 @@ func findBear(id int, waitGroup *sync.WaitGroup, regions <-chan []bool, bearFoun
 				if i {
 					fmt.Println("Bees group", id, "found the bear in region", str, " on position", index)
 					bearFoundSignal <- true
+					fmt.Println("Bees group", id, "returned.")
 					return
 				}
 			}
@@ -66,7 +68,7 @@ func findBear(id int, waitGroup *sync.WaitGroup, regions <-chan []bool, bearFoun
 func main() {
 	const (
 		//n is number of rows
-		n = 100
+		n = 10
 		//n is number of rows
 		m = 100
 		//beesNum is number of bees
@@ -83,7 +85,7 @@ func main() {
 		go findBear(i, &waitGroup, regions, bearFoundSignal)
 	}
 
-	for i := 0; i < m; i++ {
+	for i := 0; i < n; i++ {
 		regions <- forestMatrix[i]
 	}
 

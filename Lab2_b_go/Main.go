@@ -69,6 +69,7 @@ func thirdEnsign(secondToThird <-chan int, stopSygnal chan bool, waitGroup *sync
 			time.Sleep(time.Millisecond * 500)
 		}
 	}
+	defer fmt.Println("Total count:", sum)
 }
 
 func main() {
@@ -81,8 +82,8 @@ func main() {
 	go thirdEnsign(secondToThird, stopSygnal, &waitGroup)
 	time.Sleep(time.Millisecond * 10000)
 	stopSygnal <- true
+	fmt.Println("Total count:", sum)
 	waitGroup.Wait()
 	close(firstToSecond)
 	close(secondToThird)
-	fmt.Println("Total count:", sum)
 }
