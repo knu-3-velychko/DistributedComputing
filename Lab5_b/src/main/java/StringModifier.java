@@ -6,9 +6,9 @@ public class StringModifier implements Runnable {
     private int id;
     private CyclicBarrier barrier;
     private String str;
-    private Class<Result> result;
+    private Result result;
 
-    StringModifier(int id, String str, CyclicBarrier barrier, Class<Result> result) {
+    StringModifier(int id, String str, CyclicBarrier barrier, Result result) {
         this.id = id;
         this.str = str;
         this.barrier = barrier;
@@ -17,7 +17,7 @@ public class StringModifier implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("String modifier #" + id + "get string to compute: " + str);
+        System.out.println("String modifier #" + id + " get string to compute: " + str);
         long aCount = str.chars().filter(ch -> ch == 'A').count();
         long bCount = str.chars().filter(ch -> ch == 'B').count();
         HashMap<Character, Character> replacement = new HashMap<>();
@@ -34,11 +34,18 @@ public class StringModifier implements Runnable {
             replace(bCount - aCount, replacement);
         }
         try {
-            Result.saveResult("String modifier #" + id + "computed string: " + str);
             barrier.await();
         } catch (InterruptedException | BrokenBarrierException e) {
             e.printStackTrace();
         }
+        System.out.println("String modifier #" + id + " computed string: " + str);
+        result.saveResult("String modifier #" + id + " computed string: " + str);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.exit(0);
     }
 
     private void replace(long number, HashMap<Character, Character> replacement) {

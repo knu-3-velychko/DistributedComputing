@@ -2,16 +2,29 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Result {
-    private static List<String> results = new LinkedList<>();
+    private static Result instance = null;
 
-    public static synchronized void saveResult(String result) {
+    private static List<String> results;
+
+    private Result() {
+        results = new LinkedList<>();
+    }
+
+    public static synchronized Result getInstance() {
+        if (instance == null)
+            instance = new Result();
+        return instance;
+    }
+
+    public synchronized void saveResult(String result) {
         results.add(result);
     }
 
-    public static synchronized String getResults() {
+    public synchronized String getResults() {
         StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < results.size(); i++) {
-            stringBuilder.append(results.get(i));
+        for (String result : results) {
+            stringBuilder.append(result);
+            stringBuilder.append("\n");
         }
         return stringBuilder.toString();
     }
