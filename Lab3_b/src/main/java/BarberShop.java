@@ -5,17 +5,16 @@ import static java.lang.Thread.sleep;
 public class BarberShop implements Runnable {
     private Semaphore waitingChairs = new Semaphore(3);
     private Semaphore barberChair = new Semaphore(1);
-    private Semaphore sleeping = new Semaphore(1);
-
+    Barber barber;
 
     public void run() {
-        Barber barber = new Barber();
+        barber = new Barber();
         new Thread(barber).start();
 
         long i = 0L;
         while (true) {
             try {
-                sleep(500);
+                sleep(5000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -26,6 +25,7 @@ public class BarberShop implements Runnable {
     }
 
     class Barber implements Runnable {
+        private boolean isSleeping;
 
         @Override
         public void run() {
@@ -35,17 +35,25 @@ public class BarberShop implements Runnable {
         }
 
         void cutHair() {
-            if (sleeping.tryAcquire()) {
+            if (barberChair.tryAcquire())
+                isSleeping = true;
+
+            if (isSleeping) {
                 System.out.println("The barber is sleeping");
             } else {
                 System.out.println("The barber is cutting hair");
-                try {
-                    sleep(5000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
                 barberChair.release();
             }
+
+            try {
+                sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        void wakeUp() {
+            isSleeping = false;
         }
     }
 
@@ -60,15 +68,15 @@ public class BarberShop implements Runnable {
         public void run() {
             if (waitingChairs.tryAcquire()) {
                 while (!barberChair.tryAcquire()) {
+                    barber.wakeUp();
                     System.out.println("Client " + id + " waiting");
                     try {
-                        sleep(500);
+                        sleep(50000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
                 System.out.println("Client " + id + " get haircut");
-                sleeping.release();
                 waitingChairs.release();
             } else {
                 System.out.println("No free sits");
