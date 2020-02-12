@@ -7,16 +7,28 @@ import (
 	"time"
 )
 
+func getString(element int) string {
+	switch element {
+	case 0:
+		return "tabacco"
+	case 1:
+		return "paper"
+	case 2:
+		return "matches"
+	default:
+		return "unknown"
+	}
+}
+
 //component can be tabacco==0, paper==1,matches==2
 func smoker(component int, table *[]bool, readSemaphore, writeSemaphore chan bool, waitGroup *sync.WaitGroup) {
 	defer waitGroup.Done()
 	for {
 		readSemaphore <- true
-		fmt.Println("Checking table # ", component, "...")
+		fmt.Println("Checking table # ", getString(component), "...")
 		if !(*table)[component] {
-			fmt.Println("Smoking # ", component, "...")
+			fmt.Println("Smoking # ", getString(component), "...")
 			for i := range *table {
-				fmt.Println((*table)[i])
 				(*table)[i] = false
 			}
 			writeSemaphore <- true
@@ -32,7 +44,7 @@ func intermediary(table *[]bool, readSemaphore, writeSemaphore chan bool, waitGr
 	for {
 		<-writeSemaphore
 		var first, second = getCigaretteStuff()
-		fmt.Println("Intermediary put new items:", first, "and", second)
+		fmt.Println("Intermediary put new items:", getString(first), "and", getString(second))
 		(*table)[first] = true
 		(*table)[second] = true
 		<-readSemaphore
