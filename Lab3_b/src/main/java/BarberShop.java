@@ -71,16 +71,14 @@ public class BarberShop implements Runnable {
         @Override
         public void run() {
             if (waitingChairs.tryAcquire()) {
-                while (true) {
-                    System.out.println("Client " + id + " waiting");
-                    try {
-                        sleep(5000);
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                    }
+                System.out.println("Client " + id + " waiting");
+                while (!barberChair.tryAcquire()) {
                     barber.wakeUp();
-                    if (barberChair.tryAcquire())
-                        break;
+                }
+                try {
+                    sleep(5000);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
                 }
                 System.out.println("Client " + id + " set in barber chair");
                 waitingChairs.release();
