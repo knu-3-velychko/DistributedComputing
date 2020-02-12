@@ -29,31 +29,35 @@ public class BarberShop implements Runnable {
 
         @Override
         public void run() {
-            while (true) {
+            while (!Thread.currentThread().isInterrupted()) {
                 cutHair();
             }
         }
 
         void cutHair() {
-            if (barberChair.tryAcquire())
-                isSleeping = true;
-
             if (isSleeping) {
                 System.out.println("The barber is sleeping");
+                try {
+                    sleep(5000);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
             } else {
-                System.out.println("The barber is cutting hair");
-                barberChair.release();
-            }
-
-            try {
-                sleep(5000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                if (barberChair.tryAcquire())
+                    isSleeping = true;
+                else {
+                    System.out.println("The barber is cutting hair");
+                    barberChair.release();
+                }
             }
         }
 
         void wakeUp() {
-            isSleeping = false;
+            if (isSleeping) {
+                isSleeping = false;
+                barberChair.release();
+                System.out.println("The barber is woken up");
+            }
         }
     }
 
@@ -67,16 +71,18 @@ public class BarberShop implements Runnable {
         @Override
         public void run() {
             if (waitingChairs.tryAcquire()) {
-                while (!barberChair.tryAcquire()) {
-                    barber.wakeUp();
+                while (true) {
                     System.out.println("Client " + id + " waiting");
                     try {
-                        sleep(50000);
+                        sleep(5000);
                     } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        Thread.currentThread().interrupt();
                     }
+                    barber.wakeUp();
+                    if (barberChair.tryAcquire())
+                        break;
                 }
-                System.out.println("Client " + id + " get haircut");
+                System.out.println("Client " + id + " set in barber chair");
                 waitingChairs.release();
             } else {
                 System.out.println("No free sits");
