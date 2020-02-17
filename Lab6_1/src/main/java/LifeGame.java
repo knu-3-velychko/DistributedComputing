@@ -11,6 +11,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.util.List;
+
 public class LifeGame extends Application {
     private static final int width = 600;
     private static final int height = 600;
@@ -62,24 +64,53 @@ public class LifeGame extends Application {
         Button reset = new Button("Reset");
         reset.setMinWidth(buttonWidth);
 
+        setUpButtons(start, stop, reset);
         box.getChildren().addAll(start, stop, reset);
 
         Slider slider = new Slider(1, 10, 5);
+        setSliderListener(slider);
 
         box.getChildren().addAll(new Label("Slow"), slider, new Label("Fast"));
 
         root.getChildren().add(box);
     }
 
-    private void setUpButtons() {
-        //TODO: on click listeners
-    }
+    private void setUpButtons(Button start, Button stop, Button reset) {
+        List<Thread> threads = null;
 
-    private void setUpSlider() {
-        //TODO: add slider listener
+        start.setOnMouseClicked(mouseEvent -> {
+            stop.setDisable(false);
+            start.setDisable(true);
+            startGame(threads);
+        });
+
+        stop.setDisable(true);
+        stop.setOnMouseClicked(mouseEvent -> {
+            stop.setDisable(true);
+            start.setDisable(false);
+            stopGame();
+        });
+
+        reset.setOnMouseClicked(mouseEvent -> gameTable.resetMatrix());
+        //TODO: on click listeners
     }
 
     private void setCanvasListener(Canvas canvas) {
         canvas.setOnMouseClicked(mouseEvent -> gameTable.setCellState(mouseEvent.getX(), mouseEvent.getY()));
+    }
+
+    private void setSliderListener(Slider slider) {
+        slider.setOnDragDone(dragEvent -> gameTable.setPause((int) (11 - slider.getValue()) * 1000));
+    }
+
+    private void startGame(List<Thread> threads) {
+        isRunning = true;
+    }
+
+    private void stopGame(List<Thread> threads) {
+        isRunning = false;
+        for(int i=0;i<threads.size();i++){
+            //threads.
+        }
     }
 }

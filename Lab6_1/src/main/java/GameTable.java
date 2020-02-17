@@ -7,6 +7,10 @@ public class GameTable {
     private final int cellSize;
     private final GraphicsContext graphics;
 
+    private final int minPause = 1_000;
+    private final int maxPause = 10_000;
+    private int pause;
+
     private int[][] grid;
 
     public GameTable(int rows, int columns, int cellSize, GraphicsContext graphics) {
@@ -53,5 +57,18 @@ public class GameTable {
                 graphics.fillRect((i * cellSize) + 1, (j * cellSize) + 1, cellSize - 2, cellSize - 2);
             }
         }
+    }
+
+    void setPause(int pause) {
+        this.pause = pause;
+    }
+
+    void resetMatrix() {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                grid[i][j] = 0;
+            }
+        }
+        draw();
     }
 }
