@@ -12,7 +12,7 @@ public class CellsFragmentTable implements Runnable {
 
     private int[][] tmpMatrix;
 
-    private CellsFragmentTable(FragmentMatrix fragmentMatrix, ReadWriteLock readWriteLock, CyclicBarrier barrier) {
+    CellsFragmentTable(FragmentMatrix fragmentMatrix, ReadWriteLock readWriteLock, CyclicBarrier barrier) {
         this.fragmentMatrix = fragmentMatrix;
 
         this.readWriteLock = readWriteLock;
@@ -28,15 +28,15 @@ public class CellsFragmentTable implements Runnable {
         List<List<Integer>> matrix = fragmentMatrix.getFragmentMatix();
         while (!Thread.currentThread().isInterrupted()) {
             Lock readLock = readWriteLock.readLock();
+            readLock.lock();
             isChanged = false;
             for (int i = fragmentMatrix.getXStart(); i < fragmentMatrix.getXEnd(); i++) {
                 for (int j = fragmentMatrix.getYStart(); j < fragmentMatrix.getYEnd(); j++) {
                     newCellState = cellState(i, j);
                     if (newCellState != matrix.get(i).get(j)) {
                         isChanged = true;
-                        tmpMatrix[i][j] = newCellState;
+                        tmpMatrix[i - fragmentMatrix.getXStart()][j - fragmentMatrix.getYStart()] = newCellState;
                     }
-                    matrix.get(i).set(j, cellState(i, j));
                 }
             }
             readLock.unlock();
@@ -44,42 +44,54 @@ public class CellsFragmentTable implements Runnable {
             try {
                 barrier.await();
             } catch (InterruptedException | BrokenBarrierException e) {
-                e.printStackTrace();
+                barrier.reset();
+                Thread.currentThread().interrupt();
             }
 
             if (isChanged) {
                 Lock writeLock = readWriteLock.writeLock();
+                writeLock.lock();
                 for (int i = fragmentMatrix.getXStart(); i < fragmentMatrix.getXEnd(); i++) {
                     for (int j = fragmentMatrix.getYStart(); j < fragmentMatrix.getYEnd(); j++) {
-                        fragmentMatrix.getFragmentMatix().get(i).set(j, tmpMatrix[i][j]);
+                        fragmentMatrix.getFragmentMatix().get(i).set(j, tmpMatrix[i - fragmentMatrix.getXStart()][j - fragmentMatrix.getYStart()]);
                     }
                 }
                 writeLock.unlock();
+            }
+
+            try {
+                barrier.await();
+            } catch (InterruptedException | BrokenBarrierException e) {
+                barrier.reset();
+                Thread.currentThread().interrupt();
             }
         }
     }
 
     private int cellState(int x, int y) {
         int xLeft, yLeft, xRight, yRight;
-        if (x - 1 < fragmentMatrix.getXStart()) xLeft = x;
+        if (x - 1 < 0) xLeft = x;
         else xLeft = x - 1;
-        if (y - 1 < fragmentMatrix.getYStart()) yLeft = y;
+        if (y - 1 < 0) yLeft = y;
         else yLeft = y - 1;
-        if (x + 1 > fragmentMatrix.getYStart()) xRight = x;
+        if (x + 1 >= fragmentMatrix.getFragmentMatix().size()) xRight = x;
         else xRight = x + 1;
-        if (y + 1 > fragmentMatrix.getYEnd()) yRight = y;
+        if (y + 1 >= fragmentMatrix.getFragmentMatix().get(0).size()) yRight = y;
         else yRight = y + 1;
 
+
         int aliveCells = 0;
-        for (int i = xLeft; i < xRight; i++) {
-            for (int j = yLeft; j < yRight; j++) {
-                if (i != j && fragmentMatrix.getFragmentMatix().get(i).get(j) != 0) {
+        for (int i = xLeft; i <= xRight; i++) {
+            for (int j = yLeft; j <= yRight; j++) {
+                if (!(i == x && j == y) && fragmentMatrix.getFragmentMatix().get(i).get(j) != 0) {
                     aliveCells++;
                 }
             }
         }
 
-        if (fragmentMatrix.getFragmentMatix().get(x).get(y) == 0 && aliveCells > 3)
+        if (aliveCells != 0)
+            System.out.println(aliveCells);
+        if (fragmentMatrix.getFragmentMatix().get(x).get(y) == 0 && aliveCells == 3)
             return 1;
         if (fragmentMatrix.getFragmentMatix().get(x).get(y) != 0 && aliveCells >= 2 && aliveCells <= 3)
             return 1;

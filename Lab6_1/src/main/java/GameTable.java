@@ -1,17 +1,16 @@
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GameTable {
     private final int rows;
     private final int columns;
     private final int cellSize;
     private final GraphicsContext graphics;
 
-    private final int minPause = 1_000;
-    private final int maxPause = 10_000;
-    private int pause;
-
-    private int[][] grid;
+    private List<List<Integer>> grid;
 
     public GameTable(int rows, int columns, int cellSize, GraphicsContext graphics) {
         this.rows = rows;
@@ -19,13 +18,20 @@ public class GameTable {
         this.cellSize = cellSize;
         this.graphics = graphics;
 
-        grid = new int[rows][columns];
+        grid = new ArrayList<>(rows);
+        for (int i = 0; i < rows; i++) {
+            grid.add(new ArrayList<>(columns));
+            for (int j = 0; j < columns; j++) {
+                grid.get(i).add(0);
+            }
+        }
+        System.out.println(rows + " " + columns);
     }
 
     public void start() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                grid[i][j] = 0;
+                grid.get(i).set(j, 0);
             }
         }
         draw();
@@ -35,21 +41,21 @@ public class GameTable {
         int i = (int) (xPos / cellSize);
         int j = (int) (yPos / cellSize);
 
-        if (grid[i][j] == 0)
-            grid[i][j] = 1;
+        if (grid.get(i).get(j) == 0)
+            grid.get(i).set(j, 1);
         else
-            grid[i][j] = 0;
+            grid.get(i).set(j, 0);
 
         draw();
     }
 
-    private void draw() {
+    void draw() {
         graphics.setFill(Color.LIGHTSALMON);
         graphics.fillRect(0, 0, cellSize * rows, cellSize * columns);
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                if (grid[i][j] == 0) {
+                if (grid.get(i).get(j) == 0) {
                     graphics.setFill(Color.LAVENDER);
                 } else {
                     graphics.setFill(Color.LIGHTSKYBLUE);
@@ -59,14 +65,14 @@ public class GameTable {
         }
     }
 
-    void setPause(int pause) {
-        this.pause = pause;
+    List<List<Integer>> getMatrix() {
+        return grid;
     }
 
     void resetMatrix() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                grid[i][j] = 0;
+                grid.get(i).set(j, 0);
             }
         }
         draw();

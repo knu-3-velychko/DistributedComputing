@@ -11,7 +11,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class LifeGame extends Application {
     private static final int width = 600;
@@ -20,12 +24,15 @@ public class LifeGame extends Application {
     private static final int buttonWidth = 50;
 
     private static int cellSize = 10;
+    private static int fragmentSize = 10;
 
     private VBox root;
     private Scene scene;
     private GameTable gameTable;
 
     boolean isRunning;
+
+    private int pause = 5_00;
 
     public static void main(String[] args) {
         launch(args);
@@ -76,23 +83,34 @@ public class LifeGame extends Application {
     }
 
     private void setUpButtons(Button start, Button stop, Button reset) {
-        List<Thread> threads = null;
+        List<Thread> threads = new LinkedList<>();
+        ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
+        int parties = (width / (cellSize * fragmentSize)) * (height / (cellSize * fragmentSize));
+        CyclicBarrier barrier = new CyclicBarrier(parties, () -> {
+            try {
+                Thread.sleep(pause);
+                gameTable.draw();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
 
         start.setOnMouseClicked(mouseEvent -> {
             stop.setDisable(false);
             start.setDisable(true);
-            startGame(threads);
+            reset.setDisable(true);
+            startGame(threads, readWriteLock, barrier);
         });
 
         stop.setDisable(true);
         stop.setOnMouseClicked(mouseEvent -> {
             stop.setDisable(true);
             start.setDisable(false);
-            stopGame();
+            reset.setDisable(false);
+            stopGame(threads, readWriteLock, barrier);
         });
 
         reset.setOnMouseClicked(mouseEvent -> gameTable.resetMatrix());
-        //TODO: on click listeners
     }
 
     private void setCanvasListener(Canvas canvas) {
@@ -100,17 +118,49 @@ public class LifeGame extends Application {
     }
 
     private void setSliderListener(Slider slider) {
-        slider.setOnDragDone(dragEvent -> gameTable.setPause((int) (11 - slider.getValue()) * 1000));
+        slider.setOnDragDone(dragEvent -> setPause((int) (11 - slider.getValue()) * 1000));
     }
 
-    private void startGame(List<Thread> threads) {
+    private void startGame(List<Thread> threads, ReadWriteLock readWriteLock, CyclicBarrier barrier) {
         isRunning = true;
+
+        int startX = 0, startY = 0, endX = fragmentSize, endY = fragmentSize;
+        final int rows = width / cellSize, columns = height / cellSize;
+
+        while (endX <= rows) {
+            while (endY <= columns) {
+                FragmentMatrix matrix = new FragmentMatrix(gameTable.getMatrix(), startX, startY, endX, endY);
+                CellsFragmentTable cellsFragmentTable = new CellsFragmentTable(matrix, readWriteLock, barrier);
+                Thread thread = new Thread(cellsFragmentTable);
+                threads.add(thread);
+                thread.setDaemon(true);
+                thread.start();
+                startY += fragmentSize;
+                endY += fragmentSize;
+                if (endY > columns && endY != columns + fragmentSize) {
+                    endY = columns;
+                }
+            }
+
+            startY = 0;
+            endY = fragmentSize;
+            startX += fragmentSize;
+            endX += fragmentSize;
+            if (endX > rows && endX != rows + fragmentSize) {
+                endX = rows;
+            }
+        }
     }
 
-    private void stopGame(List<Thread> threads) {
+    private void stopGame(List<Thread> threads, ReadWriteLock readWriteLock, CyclicBarrier barrier) {
         isRunning = false;
-        for(int i=0;i<threads.size();i++){
-            //threads.
+        for (Thread value : threads) {
+            value.interrupt();
         }
+        threads.clear();
+    }
+
+    void setPause(int pause) {
+        this.pause = pause;
     }
 }
