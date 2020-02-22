@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +34,7 @@ public class LifeGame extends Application {
 
     private int currentColor;
 
-    private Map<Integer, Color> map;
+    private final Color[] list = new Color[]{null, Color.BLACK, Color.PERU, Color.POWDERBLUE, Color.CORAL, Color.GOLD};
 
     private int pause = 5_00;
 
@@ -49,7 +50,7 @@ public class LifeGame extends Application {
         scene = new Scene(root, width, height + toolPaneHeight);
         final Canvas canvas = new Canvas(width, height);
         GraphicsContext graphics = canvas.getGraphicsContext2D();
-        this.gameTable = new GameTable(height / cellSize, width / cellSize, cellSize, graphics);
+        this.gameTable = new GameTable(height / cellSize, width / cellSize, cellSize, graphics, list);
         root.getChildren().add(canvas);
 
         setUpBottomPane();
@@ -82,13 +83,16 @@ public class LifeGame extends Application {
         ToggleGroup group = new ToggleGroup();
         RadioButton button;
 
-        for (Integer i : map.keySet()) {
+        for (int i = 1; i < list.length; i++) {
             button = new RadioButton();
-            button.setText(map.get(i).toString());
+            button.setText(Integer.toString(i));
             group.getToggles().add(button);
+            box.getChildren().add(button);
         }
+
         group.selectedToggleProperty().addListener((observableValue, toggle, t1) -> {
-            //toggle.
+            RadioButton chk = (RadioButton) t1.getToggleGroup().getSelectedToggle();
+            currentColor = Integer.parseInt(chk.getText());
         });
     }
 
@@ -121,9 +125,12 @@ public class LifeGame extends Application {
     private void startGame(List<Thread> threads) {
         isRunning = true;
 
-        for (Integer i : map.keySet()) {
-            CellsFragmentTable cellsFragmentTable = new CellsFragmentTable(i, gameTable.getMatrix());
+        for (int i = 1; i < list.length; i++) {
+            CellsFragmentTable cellsFragmentTable = new CellsFragmentTable(i, gameTable);
             Thread thread = new Thread(cellsFragmentTable);
+            threads.add(thread);
+            thread.setDaemon(true);
+            thread.start();
         }
     }
 

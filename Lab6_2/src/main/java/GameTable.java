@@ -1,3 +1,4 @@
+import javafx.application.Platform;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -13,11 +14,14 @@ public class GameTable {
 
     private List<List<AtomicInteger>> grid;
 
-    public GameTable(int rows, int columns, int cellSize, GraphicsContext graphics) {
+    private final Color[] list;
+
+    public GameTable(int rows, int columns, int cellSize, GraphicsContext graphics, Color[] list) {
         this.rows = rows;
         this.columns = columns;
         this.cellSize = cellSize;
         this.graphics = graphics;
+        this.list = list;
 
         grid = new ArrayList<>(rows);
         for (int i = 0; i < rows; i++) {
@@ -49,7 +53,7 @@ public class GameTable {
         draw();
     }
 
-    void draw() {
+    synchronized void draw() {
         graphics.setFill(Color.LIGHTSALMON);
         graphics.fillRect(0, 0, cellSize * rows, cellSize * columns);
 
@@ -58,7 +62,7 @@ public class GameTable {
                 if (grid.get(i).get(j).get() == 0) {
                     graphics.setFill(Color.LAVENDER);
                 } else {
-                    graphics.setFill(Color.LIGHTSKYBLUE);
+                    graphics.setFill(list[grid.get(i).get(j).get()]);
                 }
                 graphics.fillRect((i * cellSize) + 1, (j * cellSize) + 1, cellSize - 2, cellSize - 2);
             }

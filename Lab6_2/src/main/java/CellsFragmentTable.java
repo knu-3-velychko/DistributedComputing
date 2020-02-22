@@ -3,37 +3,43 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class CellsFragmentTable implements Runnable {
 
+    private final GameTable gameTable;
     private List<List<AtomicInteger>> matrix;
-
-    private int top, bottom, left, right;
 
     private final int color;
 
 
-    CellsFragmentTable(int color, List<List<AtomicInteger>> matrix) {
+    CellsFragmentTable(int color, GameTable table) {
         this.color = color;
-        this.matrix = matrix;
+        this.gameTable = table;
+        this.matrix = table.getMatrix();
     }
 
     @Override
     public void run() {
         int newCellState;
-
-        for (int i = 0; i < matrix.size(); i++) {
-            for (int j = 0; j < matrix.get(0).size(); j++) {
-                checkCell(i, j);
-            }
-        }
+        boolean isChanged;
 
         while (!Thread.currentThread().isInterrupted()) {
-            for (int i = top; i < bottom; i++) {
-                for (int j = left; j < right; j++) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+
+            isChanged = false;
+            for (int i = 0; i < matrix.size(); i++) {
+                for (int j = 0; j < matrix.size(); j++) {
                     newCellState = cellState(i, j);
                     if (newCellState != matrix.get(i).get(j).get()) {
                         matrix.get(i).set(j, new AtomicInteger(newCellState));
+                        isChanged = true;
                     }
                 }
             }
+
+            if (isChanged)
+                gameTable.draw();
         }
     }
 
@@ -58,27 +64,15 @@ public class CellsFragmentTable implements Runnable {
             }
         }
 
-        if (aliveCells != 0)
-            System.out.println(aliveCells);
-        if (matrix.get(x).get(y).get() == 0 && aliveCells == 3) {
-            checkCell(x, y);
+        if (matrix.get(x).get(y).get() != color && aliveCells == 3) {
             return color;
         }
         if (matrix.get(x).get(y).get() == color && aliveCells >= 2 && aliveCells <= 3) {
-            checkCell(x, y);
             return color;
         }
-        return 0;
+        if (matrix.get(x).get(y).get() == color && (aliveCells < 2 || aliveCells > 3))
+            return 0;
+        return matrix.get(x).get(y).get();
     }
 
-    void checkCell(int x, int y) {
-        if (x < left)
-            left = x;
-        if (y < top)
-            top = y;
-        if (x > right)
-            right = x;
-        if (y > bottom)
-            bottom = y;
-    }
 }
