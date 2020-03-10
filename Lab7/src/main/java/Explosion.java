@@ -6,7 +6,7 @@ public class Explosion implements Runnable {
     private GamePanel panel;
 
     private int x, y;
-    private int sizeX = 110, sizeY = 110;
+    private int sizeX = 128, sizeY = 128;
 
     Explosion(GamePanel panel, int x, int y) {
         this.panel = panel;

@@ -17,7 +17,7 @@ public class Hunter implements Runnable {
         return sizeY;
     }
 
-    private static final int sizeX = 200, sizeY = 130;
+    private static final int sizeX = 160, sizeY = 168;
 
     private static final int dx = 20;
     private int width;

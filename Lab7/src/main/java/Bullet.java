@@ -7,8 +7,8 @@ public class Bullet extends Thread {
 
     private static final int dx = 6;
     private static final int dy = 10;
-    private final int sizeX = 70;
-    private final int sizeY = 60;
+    private final int sizeX = 85;
+    private final int sizeY = 86;
     boolean side;
 
     private GamePanel panel;

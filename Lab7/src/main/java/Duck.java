@@ -28,8 +28,8 @@ public class Duck extends Thread {
         return sizeY;
     }
 
-    private final int sizeX = 90;
-    private final int sizeY = 90;
+    private final int sizeX = 128;
+    private final int sizeY = 128;
 
     private JLabel duck;
     private GamePanel panel;
@@ -49,7 +49,7 @@ public class Duck extends Thread {
         duck.setSize(new Dimension(sizeX, sizeY));
 
         speedX = Math.abs(random.nextInt(3)) + 1;
-        speedY = Math.abs(random.nextInt(2)) - 1;
+        speedY = Math.abs(random.nextInt(2)) - 5;
         if (duckType == 1) speedX = -speedX;
 
         y = height;
