@@ -59,10 +59,9 @@ public class Bullet extends Thread {
             } catch (InterruptedException e) {
                 break;
             }
-
-            panel.remove(bulletLabel);
-            panel.repaint();
-            hunter.throwBullet(-1);
         }
+        panel.remove(bulletLabel);
+        panel.repaint();
+        hunter.throwBullet(-1);
     }
 }
