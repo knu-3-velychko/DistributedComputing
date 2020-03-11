@@ -4,6 +4,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class Controller {
     @FXML
     private Button start1, start2, stop1, stop2;
@@ -16,7 +18,7 @@ public class Controller {
 
     private Thread thread1, thread2;
 
-    private volatile int semaphore = 0;
+    private volatile AtomicInteger semaphore = new AtomicInteger(0);
     private double position = 50.0;
 
     @FXML
@@ -31,7 +33,7 @@ public class Controller {
 
     @FXML
     public void startThreadOne() {
-        thread1 = initializeThread(1, "Second thread is running.", 10.0, false, true);
+        thread1 = initializeThread("Second thread is running.", 10.0, false, true);
         thread1.setDaemon(true);
         thread1.setPriority(1);
         thread1.start();
@@ -39,7 +41,7 @@ public class Controller {
 
     @FXML
     public void startThreadTwo() {
-        thread2 = initializeThread(2, "First thread is running.", 90.0, true, false);
+        thread2 = initializeThread("First thread is running.", 90.0, true, false);
         thread2.setDaemon(true);
         thread2.setPriority(10);
         thread2.start();
@@ -47,24 +49,21 @@ public class Controller {
 
     @FXML
     public void stopThreadOne() {
-        semaphore = 0;
+        semaphore.set(0);
     }
 
     @FXML
     public void stopThreadTwo() {
-        semaphore = 0;
+        semaphore.set(0);
     }
 
-    private Thread initializeThread(int semaphoreValue, String messageText, double targetPosition, boolean disabledStop1, boolean disabledStop2) {
+    private Thread initializeThread(String messageText, double targetPosition, boolean disabledStop1, boolean disabledStop2) {
         return new Thread(() -> {
-            if (semaphore == 0)
-                semaphore = semaphoreValue;
-            else if (semaphore != semaphoreValue)
+            if (semaphore.get() != 0)
                 message.setText(messageText);
-            if (semaphore == semaphoreValue) {
+            else if (semaphore.compareAndSet(0, 1)) {
                 setUpButtons(true, true, disabledStop1, disabledStop2);
-                while ((int) position != (int) targetPosition && semaphore != 0) {
-                    Thread.yield();
+                while ((int) position != (int) targetPosition && semaphore.get() != 0) {
                     if (position < targetPosition)
                         position++;
                     else
@@ -80,7 +79,7 @@ public class Controller {
                         e.printStackTrace();
                     }
                 }
-                semaphore = 0;
+                semaphore.set(0);
                 setUpButtons(false, false, false, false);
             }
         });
