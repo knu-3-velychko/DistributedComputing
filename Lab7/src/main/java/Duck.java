@@ -20,11 +20,11 @@ public class Duck extends Thread {
     private int width;
     private int height;
 
-    public int getSizeX() {
+    synchronized public int getSizeX() {
         return sizeX;
     }
 
-    public int getSizeY() {
+    synchronized public int getSizeY() {
         return sizeY;
     }
 
@@ -85,6 +85,6 @@ public class Duck extends Thread {
         panel.remove(duck);
         panel.repaint();
         panel.removeDuck(this);
-        new Thread(new Explosion(panel,x,y)).start();
+        new Thread(new Explosion(panel, x, y)).start();
     }
 }
