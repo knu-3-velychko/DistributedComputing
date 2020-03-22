@@ -1,12 +1,72 @@
 import com.hp.gagawa.java.elements.*;
+import javafx.util.Pair;
+
+import java.io.*;
+import java.util.List;
 
 public class HTMLBuilder {
-    private Table table = new Table();
+    private PrintWriter out;
+
+    private Html html;
+    private Body body;
+
+    private Table table;
+
+    HTMLBuilder() {
+        try {
+            File file = new File("index.html");
+            out = new PrintWriter(new FileOutputStream(file));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void build() {
+        html = new Html();
+        Head head = new Head();
+
+        html.appendChild(head);
+        Title title = new Title();
+        title.appendChild(new Text("Reporting Page"));
+        head.appendChild(title);
+
+        html.appendChild(head);
+
+        body = new Body();
+    }
+
+    public void createTable() {
+        table = buildTable();
+    }
+
+    public void finishTable() {
+        body.appendChild(table);
+        html.appendChild(body);
+    }
+
+    public void addResult(int matrixSize, double time1, List<Pair<Double, Double>> results) {
+        Tr tr = new Tr();
+        tr.appendChild(new Td().appendText(Integer.toString(matrixSize)));
+        tr.appendChild(new Td().appendText(Double.toString(time1)));
+
+        for (Pair<Double, Double> value : results) {
+            tr.appendChild(new Td().appendText(Double.toString(value.getKey())));
+            tr.appendChild(new Td().appendText(Double.toString(value.getValue())));
+        }
+
+        table.appendChild(tr);
+    }
+
+    public void finish() {
+        html.appendChild(body);
+        out.println(html.write());
+        out.close();
+    }
+
+    private Table buildTable() {
         table = new Table();
         addHeading();
-        System.out.println(table.write());
+        return table;
     }
 
     private void addHeading() {
