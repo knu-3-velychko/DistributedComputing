@@ -1,3 +1,5 @@
+import java.util.concurrent.ForkJoinPool;
+
 public class StripesSchema {
     private final double[][] A;
     private final double[][] B;
@@ -9,11 +11,21 @@ public class StripesSchema {
     public StripesSchema(double[][] A, double[][] B, int threadsNumb) {
         this.A = A;
         this.B = B;
+        this.C = new double[A.length][B[0].length];
+
+        for (int i = 0; i < C.length; i++) {
+            C[i] = new double[B[0].length];
+        }
 
         this.threadsNumb = threadsNumb;
     }
 
-    public void calculateProduct() {
+    public void calculateProduct(int threadsNumb) {
+        ForkJoinPool forkJoinPool;
 
+        for (int i = 0; i < threadsNumb; i++) {
+            forkJoinPool = new ForkJoinPool(threadsNumb);
+            forkJoinPool.invoke(new MatrixProductTask(A, B, C, i, threadsNumb));
+        }
     }
 }

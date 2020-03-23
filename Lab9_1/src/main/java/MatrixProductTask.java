@@ -1,6 +1,8 @@
-import java.util.concurrent.ForkJoinTask;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.RecursiveAction;
 
-public class MatrixProductTask extends ForkJoinTask<double[][]> {
+public class MatrixProductTask extends RecursiveAction {
     private final double[][] A;
     private final double[][] B;
 
@@ -11,6 +13,15 @@ public class MatrixProductTask extends ForkJoinTask<double[][]> {
 
     private final int column_start;
     private final int column_end;
+
+    private int i = 0;
+    private int threadsNumber = 0;
+
+    public MatrixProductTask(final double[][] A, final double[][] B, double[][] C, int i, int threadsNumber) {
+        this(A, B, C, 0, A.length, 0, B.length);
+        this.i = i;
+        this.threadsNumber = threadsNumber;
+    }
 
     public MatrixProductTask(final double[][] A, final double[][] B, double[][] C, int row_start, int row_end, int column_start, int column_end) {
         this.A = A;
@@ -25,23 +36,31 @@ public class MatrixProductTask extends ForkJoinTask<double[][]> {
     }
 
     @Override
-    public double[][] getRawResult() {
-        return C;
-    }
+    protected void compute() {
+        if (threadsNumber > 0) {
+            List<MatrixProductTask> tasks = new ArrayList<>();
+            int row_start, row_end;
+            int column_start, column_end;
 
-    @Override
-    protected void setRawResult(double[][] result) {
-        this.C = result;
-    }
+            for (int j = 0; j < threadsNumber; j++) {
+                row_start = j * threadsNumber;
+                row_end = Math.min((j + 1) * threadsNumber, A.length);
 
-    @Override
-    protected boolean exec() {
-        for (int i = row_start; i < row_end; i++) {
-            for (int j = column_start; j < column_end; j++) {
-                C[i][j] = calculateEntry(i, j);
+                column_start = ((i + j) % threadsNumber) * threadsNumber;
+                column_end = Math.min((column_start + 1) * threadsNumber, A.length);
+
+                MatrixProductTask task = new MatrixProductTask(A, B, C, row_start, row_end, column_start, column_end);
+                tasks.add(task);
+            }
+
+            RecursiveAction.invokeAll(tasks);
+        } else {
+            for (int i = row_start; i < row_end; i++) {
+                for (int j = column_start; j < column_end; j++) {
+                    C[i][j] = calculateEntry(i, j);
+                }
             }
         }
-        return true;
     }
 
     private double calculateEntry(int i, int j) {
