@@ -20,12 +20,14 @@ public class StripesSchema {
         this.threadsNumb = threadsNumb;
     }
 
-    public void calculateProduct(int threadsNumb) {
+    public double[][] calculateProduct() {
         ForkJoinPool forkJoinPool;
 
         for (int i = 0; i < threadsNumb; i++) {
             forkJoinPool = new ForkJoinPool(threadsNumb);
             forkJoinPool.invoke(new MatrixProductTask(A, B, C, i, threadsNumb));
         }
+
+        return C;
     }
 }

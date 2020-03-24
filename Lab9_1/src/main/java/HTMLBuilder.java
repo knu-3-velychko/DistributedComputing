@@ -14,7 +14,7 @@ public class HTMLBuilder {
 
     HTMLBuilder() {
         try {
-            File file = new File("index.html");
+            File file = new File("./src/main/resources/index.html");
             out = new PrintWriter(new FileOutputStream(file));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -25,10 +25,11 @@ public class HTMLBuilder {
         html = new Html();
         Head head = new Head();
 
-        html.appendChild(head);
-        Title title = new Title();
-        title.appendChild(new Text("Reporting Page"));
+        Title title = new Title().appendChild(new Text("Reporting Page"));
         head.appendChild(title);
+
+        Link link = new Link().setRel("stylesheet").setHref("style.css");
+        head.appendChild(link);
 
         html.appendChild(head);
 
@@ -41,7 +42,6 @@ public class HTMLBuilder {
 
     public void finishTable() {
         body.appendChild(table);
-        html.appendChild(body);
     }
 
     public void addResult(int matrixSize, double time1, List<Pair<Double, Double>> results) {
@@ -73,7 +73,7 @@ public class HTMLBuilder {
         Tr heading = new Tr();
         heading.appendChild(new Th().appendText("Matrix size").setRowspan("3"));
         heading.appendChild(new Th().appendText("Sequential algorithm").setRowspan("3"));
-        heading.appendChild(new Th().appendText("Parallel algorithm").setRowspan("3"));
+        heading.appendChild(new Th().appendText("Parallel algorithm").setColspan("6"));
 
         table.appendChild(heading);
 
