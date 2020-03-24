@@ -21,13 +21,13 @@ public class StripesSchema {
     }
 
     public double[][] calculateProduct() {
-        ForkJoinPool forkJoinPool;
+        ForkJoinPool forkJoinPool = new ForkJoinPool(threadsNumb);
 
         for (int i = 0; i < threadsNumb; i++) {
-            forkJoinPool = new ForkJoinPool(threadsNumb);
             forkJoinPool.invoke(new MatrixProductTask(A, B, C, i, threadsNumb));
         }
 
+        forkJoinPool.shutdown();
         return C;
     }
 }
