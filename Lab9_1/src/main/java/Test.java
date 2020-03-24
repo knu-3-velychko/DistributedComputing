@@ -37,9 +37,6 @@ public class Test {
             acceleration = sequentialTime / time;
             results.add(new Pair<>(time, acceleration));
 
-            time = ((double) calculate(i, 9)) / 1000.0;
-            acceleration = sequentialTime / time;
-            results.add(new Pair<>(time, acceleration));
 
             htmlBuilder.addResult(i, sequentialTime, results);
 
@@ -53,15 +50,13 @@ public class Test {
         MatrixGenerator matrixGenerator = new MatrixGenerator(size, 100);
         double[][] A = matrixGenerator.generate();
         double[][] B = matrixGenerator.generate();
-        //1 proc, 2 proc, 4 proc, 9 proc
+        //1 proc, 2 proc, 4 proc
         StripesSchema stripesSchema = new StripesSchema(A, B, threadsNumber);
-        Long startTime = System.currentTimeMillis();
+        long startTime = System.currentTimeMillis();
 
         stripesSchema.calculateProduct();
 
-        Long time = System.currentTimeMillis() - startTime;
-
-        return time;
+        return System.currentTimeMillis() - startTime;
     }
 
     private void finish() {
