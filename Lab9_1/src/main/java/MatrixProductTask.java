@@ -8,11 +8,11 @@ public class MatrixProductTask extends RecursiveAction {
 
     private double[][] C;
 
-    private final int row_start;
-    private final int row_end;
+    private final int rowStart;
+    private final int rowEnd;
 
-    private final int column_start;
-    private final int column_end;
+    private final int columnStart;
+    private final int columnEnd;
 
     private int i = 0;
     private int threadsNumber = 0;
@@ -23,16 +23,16 @@ public class MatrixProductTask extends RecursiveAction {
         this.threadsNumber = threadsNumber;
     }
 
-    public MatrixProductTask(final double[][] A, final double[][] B, double[][] C, int row_start, int row_end, int column_start, int column_end) {
+    public MatrixProductTask(final double[][] A, final double[][] B, double[][] C, int rowStart, int rowEnd, int columnStart, int columnEnd) {
         this.A = A;
         this.B = B;
         this.C = C;
 
-        this.row_start = row_start;
-        this.row_end = row_end;
+        this.rowStart = rowStart;
+        this.rowEnd = rowEnd;
 
-        this.column_start = column_start;
-        this.column_end = column_end;
+        this.columnStart = columnStart;
+        this.columnEnd = columnEnd;
     }
 
     @Override
@@ -40,23 +40,23 @@ public class MatrixProductTask extends RecursiveAction {
         if (threadsNumber > 0) {
             List<MatrixProductTask> tasks = new ArrayList<>();
             int taskSize = (int) Math.round((double) A.length / (double) threadsNumber);
-            int row_start, row_end;
-            int column_start, column_end;
+            int rowStart, rowEnd;
+            int columnStart, columnEnd;
 
             for (int j = 0; j < threadsNumber; j++) {
-                row_start = j * taskSize;
-                row_end = (j == (threadsNumber - 1)) ? A.length : (j + 1) * taskSize;
-                column_start = ((i + j) % threadsNumber) * taskSize;
-                column_end = (column_start / taskSize == threadsNumber - 1) ? A.length : (column_start + taskSize);
+                rowStart = j * taskSize;
+                rowEnd = (j == (threadsNumber - 1)) ? A.length : (j + 1) * taskSize;
+                columnStart = ((i + j) % threadsNumber) * taskSize;
+                columnEnd = (columnStart / taskSize == threadsNumber - 1) ? A.length : (columnStart + taskSize);
 
-                MatrixProductTask task = new MatrixProductTask(A, B, C, row_start, row_end, column_start, column_end);
+                MatrixProductTask task = new MatrixProductTask(A, B, C, rowStart, rowEnd, columnStart, columnEnd);
                 tasks.add(task);
             }
 
             RecursiveAction.invokeAll(tasks);
         } else {
-            for (int i = row_start; i < row_end; i++) {
-                for (int j = column_start; j < column_end; j++) {
+            for (int i = rowStart; i < rowEnd; i++) {
+                for (int j = columnStart; j < columnEnd; j++) {
                     C[i][j] = calculateEntry(i, j);
                 }
             }
