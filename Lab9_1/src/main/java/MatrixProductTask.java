@@ -39,16 +39,15 @@ public class MatrixProductTask extends RecursiveAction {
     protected void compute() {
         if (threadsNumber > 0) {
             List<MatrixProductTask> tasks = new ArrayList<>();
-            int taskSize = A.length / threadsNumber;
+            int taskSize = (int) Math.round((double) A.length / (double) threadsNumber);
             int row_start, row_end;
             int column_start, column_end;
 
             for (int j = 0; j < threadsNumber; j++) {
                 row_start = j * taskSize;
-                row_end = Math.min((j + 1) * taskSize + 1, A.length);
-
+                row_end = (j == (threadsNumber - 1)) ? A.length : (j + 1) * taskSize;
                 column_start = ((i + j) % threadsNumber) * taskSize;
-                column_end = Math.min((column_start + 1) * taskSize + 1, A.length);
+                column_end = (column_start / taskSize == threadsNumber - 1) ? A.length : (column_start + taskSize);
 
                 MatrixProductTask task = new MatrixProductTask(A, B, C, row_start, row_end, column_start, column_end);
                 tasks.add(task);
