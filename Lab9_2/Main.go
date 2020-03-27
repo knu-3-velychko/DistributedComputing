@@ -191,10 +191,50 @@ func closeHTML(f *os.File) {
 	}
 }
 
-func test() {
-	//TODO: create test for each matrix size
+func test(name string) {
+	sizes := []int{100, 500, 1000, 1500, 2000, 2500, 3000}
+	var sequentialTime float32
+	var time, acceleration float32
+
+	f := createHTML(name)
+	addHead(f)
+	startBody(f)
+	createTable(f)
+
+	for i := range sizes {
+		results := make([]FloatPair, 2)
+		sequentialTime = (float32)(calculate(sizes[i], 1)) / 1000000.0
+
+		time = (float32)(calculate(sizes[i], 2)) / 1000000.0
+		acceleration = sequentialTime / time
+		results[0] = FloatPair{time, acceleration}
+
+		time = (float32)(calculate(sizes[i], 4)) / 1000000.0
+		acceleration = sequentialTime / time
+		results[1] = FloatPair{time, acceleration}
+
+		addResult(f, sizes[i], sequentialTime, results)
+		fmt.Println(sizes[i])
+	}
+
+	finishBody(f)
+	closeHTML(f)
+
+}
+
+func calculate(size, threadsNumber int) int64 {
+	A := generateMatrix(size, 100)
+	B := generateMatrix(size, 100)
+
+	startTime := time.Now().UnixNano()
+
+	stripesMethod(A, B, threadsNumber)
+
+	finishTime := time.Now().UnixNano()
+
+	return finishTime - startTime
 }
 
 func main() {
-
+	test("index")
 }
