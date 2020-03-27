@@ -128,13 +128,13 @@ func finishBody(f *os.File) {
 func createTable(f *os.File) {
 	_, err := f.WriteString(`<table>
     <tr>
-        <th rowspan=\"3\">Matrix size</th>
-        <th rowspan=\"3\">Sequential algorithm</th>
-        <th colspan=\"4\">Parallel algorithm</th>
+        <th rowspan="3">Matrix size</th>
+        <th rowspan="3">Sequential algorithm</th>
+        <th colspan="4">Parallel algorithm</th>
     </tr>
     <tr>
-        <th colspan=\"2\">2 processes</th>
-        <th colspan=\"2\">4 processes</th>
+        <th colspan="2">2 processes</th>
+        <th colspan="2">4 processes</th>
     </tr>
     <tr>
         <th>Time</th>
