@@ -28,7 +28,6 @@ public class Test {
             results = new LinkedList<>();
             sequentialTime = ((double) calculate(i, 1)) / 1000.0;
 
-            //FIXME: repeated code
             time = ((double) calculate(i, 2)) / 1000.0;
             acceleration = sequentialTime / time;
             results.add(new Pair<>(time, acceleration));

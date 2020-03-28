@@ -54,7 +54,7 @@ func stripesMethod(A, B [][]float32, threadsNumber int) [][]float32 {
 				columnEnd = columnStart + taskSize
 			}
 
-			compute(A, B, C, rowStart, rowEnd, columnStart, columnEnd, &waitgroup)
+			go compute(A, B, C, rowStart, rowEnd, columnStart, columnEnd, &waitgroup)
 		}
 
 		waitgroup.Wait()
@@ -157,8 +157,8 @@ type FloatPair struct {
 
 func addResult(f *os.File, matrixSize int, sequenialTime float32, results []FloatPair) {
 	resultString := "<tr>"
-	resultString += "<td>" + strconv.Itoa(matrixSize) + "/<td>"
-	resultString += "<td>" + fmt.Sprintf("%f", sequenialTime) + "/<td>"
+	resultString += "<td>" + strconv.Itoa(matrixSize) + "</td>"
+	resultString += "<td>" + fmt.Sprintf("%f", sequenialTime) + "</td>"
 
 	for i := range results {
 		resultString += "<td>" + fmt.Sprintf("%f", results[i].first) + "</td>"
