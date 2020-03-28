@@ -6,7 +6,8 @@ namespace Lab9_5
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var htmlBuilder = new HtmlBuilder("./resources/index.html");
+            htmlBuilder.CreateHtml().AddHead().CreateTable().FinishTable().Finish();
         }
     }
 }
