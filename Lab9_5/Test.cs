@@ -45,6 +45,7 @@ namespace Lab9_5
                 
                 Console.WriteLine(i);
             }
+            Finish();
         }
 
         private int Calculate(int size, int threadsNumber)

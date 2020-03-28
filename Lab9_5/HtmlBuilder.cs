@@ -66,6 +66,9 @@ namespace Lab9_5
 
         public HtmlBuilder AddResult(int matrixSize, double sequentialTime, List<KeyValuePair<double,double>> results)
         {
+            Console.WriteLine(matrixSize);
+            Console.WriteLine(sequentialTime);
+
             var tr=new HtmlTag("tr");
             tr.Append(new HtmlTag("td").Text(matrixSize.ToString()));
             tr.Append(new HtmlTag("td").Text(sequentialTime.ToString(CultureInfo.InvariantCulture)));
