@@ -22,7 +22,7 @@ namespace Lab9_5
             _random = new Random();
         }
 
-        double[,] Generate()
+        public double[,] Generate()
         {
             var matrix=new double[_rowSize,_columnSize];
 

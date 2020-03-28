@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 namespace Lab9_5
 {
@@ -29,8 +31,36 @@ namespace Lab9_5
             foreach (var i in sizes)
             {
                 results=new List<KeyValuePair<double, double>>();
-                //TODO: time
+                sequentialTime = Calculate(i, 1) / 1000.0;
+
+                time = Calculate(i, 2) / 1000.0;
+                acceleration = sequentialTime / time;
+                results.Append(new KeyValuePair<double, double>(time,acceleration));
+
+                time = Calculate(i, 4) / 1000.0;
+                acceleration = sequentialTime / time;
+                results.Append(new KeyValuePair<double, double>(time,acceleration));
+
+                _builder.AddResult(i, sequentialTime, results);
+                
+                Console.WriteLine(i);
             }
+        }
+
+        private int Calculate(int size, int threadsNumber)
+        {
+            var matrixGenerator=new MatrixGenerator(size, 100);
+            var A = matrixGenerator.Generate();
+            var B = matrixGenerator.Generate();
+            
+            var stripesSchema=new StripesSchema(A, B, threadsNumber);
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            stripesSchema.CalculateProduct();
+            
+            stopwatch.Stop();
+            return stopwatch.Elapsed.Milliseconds;
         }
 
         private void Finish()
