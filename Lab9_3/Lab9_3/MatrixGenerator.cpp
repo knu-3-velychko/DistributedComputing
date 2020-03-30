@@ -11,5 +11,14 @@ MatrixGenerator::MatrixGenerator(int rowSize, int columnSize, double maxValue) :
 double** MatrixGenerator::generate()
 {
 	double** matrix = new double* [rowSize];
-	return nullptr;
+
+	for (int i = 0; i < rowSize; i++) {
+		matrix[i] = new double[columnSize];
+		for (int j = 0; j < columnSize; j++) {
+			std::uniform_real_distribution<double> unif(0.0, maxValue);
+			std::default_random_engine re;
+			matrix[i][j] = unif(re);
+		}
+	}
+	return matrix;
 }

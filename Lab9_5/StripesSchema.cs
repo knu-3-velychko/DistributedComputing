@@ -24,6 +24,11 @@ namespace Lab9_5
 
         public double[,] CalculateProduct()
         {
+            ParallelOptions po = new ParallelOptions
+            {
+                MaxDegreeOfParallelism = _threadsNumber
+            };
+
             var taskSize = _A.GetLength(0) / _threadsNumber;
 
             for (var i = 0; i < _threadsNumber; i++)
