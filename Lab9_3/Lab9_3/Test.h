@@ -1,10 +1,13 @@
 #pragma once
 
+#include "MatrixGenerator.h"
+#include "StripesSchema.h"
 #include "HtmlBuilder.h"
 #include <vector>
 #include <string>
 #include <utility>
 #include <iostream>
+#include <chrono>
 
 class Test
 {
@@ -17,7 +20,7 @@ private:
 	std::vector<int> sizes;
 	HtmlBuilder* builder;
 
-	int calculate(int size, int threadsNumber);
+	double calculate(int size, int threadsNumber);
 	void finish();
 };
 

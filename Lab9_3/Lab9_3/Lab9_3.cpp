@@ -7,7 +7,9 @@
 
 int main()
 {
-	auto test = new Test("/resoutce/index.html");
+	auto test = new Test("index.html");
+	test->addTask(100);
+	/*
 	test->addTask(100);
 	test->addTask(500);
 	test->addTask(1000);
@@ -15,5 +17,6 @@ int main()
 	test->addTask(2000);
 	test->addTask(2500);
 	test->addTask(3000);
+	*/
 	test->run();
 }

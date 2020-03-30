@@ -29,6 +29,7 @@ HtmlBuilder* HtmlBuilder::startBody()
 HtmlBuilder* HtmlBuilder::createTable()
 {
 	html << "<table>" << std::endl;
+	addTableHeading();
 	return nullptr;
 }
 
@@ -57,7 +58,13 @@ HtmlBuilder* HtmlBuilder::finishTable()
 HtmlBuilder* HtmlBuilder::finishBody()
 {
 	html << "</body>" << std::endl;
-	return nullptr;
+	return this;
+}
+
+void HtmlBuilder::finishHtml()
+{
+	html << "</html>" << std::endl;
+	html.close();
 }
 
 std::ofstream* HtmlBuilder::getHtml()

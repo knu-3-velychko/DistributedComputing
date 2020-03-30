@@ -20,13 +20,13 @@ void Test::run()
 
 	for (auto i : sizes) {
 		std::vector<std::pair<double, double>> results = std::vector<std::pair<double, double>>();
-		sequentialTime = calculate(i, 1) / 1000.0;
+		sequentialTime = calculate(i, 1);
 
-		time = calculate(i, 2) / 1000.0;
+		time = calculate(i, 2);
 		acceleration = sequentialTime / time;
 		results.push_back(std::pair<double, double>(time, acceleration));
 
-		time = calculate(i, 4) / 1000.0;
+		time = calculate(i, 4);
 		acceleration = sequentialTime / time;
 		results.push_back(std::pair<double, double>(time, acceleration));
 
@@ -34,6 +34,24 @@ void Test::run()
 
 		std::cout << i << std::endl;
 	}
+}
+
+double Test::calculate(int size, int threadsNumber)
+{
+	auto matrixGenerator = MatrixGenerator(size, 100.0);
+	auto A = matrixGenerator.generate();
+	auto B = matrixGenerator.generate();
+
+	auto stripesShema = StripesSchema(A, B, size, size, threadsNumber);
+
+	auto start = std::chrono::steady_clock::now();
+
+	auto C = stripesShema.calculateProduct();
+
+	auto end = std::chrono::steady_clock::now();
+	std::chrono::duration<double> elapsedSeconds = end - start;
+
+	return elapsedSeconds.count();
 }
 
 void Test::finish()

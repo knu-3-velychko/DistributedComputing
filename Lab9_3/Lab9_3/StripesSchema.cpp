@@ -12,17 +12,18 @@ double** StripesSchema::calculateProduct()
 {
 	int taskSize = rows / threadsNumber;
 	tbb::task_scheduler_init init(threadsNumber);
-	int rowStart, rowEnd, columnStart, columnEnd;
 
 	for (int i = 0; i < threadsNumber; i++) {
 		tbb::parallel_for(0, threadsNumber, 1, [&](int j) {
+			int rowStart, rowEnd, columnStart, columnEnd;
+
 			rowStart = j * taskSize;
 			rowEnd = (j == threadsNumber - 1) ? rows : (j + 1) * taskSize;
 
 			columnStart = ((i + j) % threadsNumber) * taskSize;
 			columnEnd = (columnStart / taskSize == threadsNumber - 1) ? rows : (columnStart + taskSize);
 
-			compute(rowStart, rowEnd, columnStart, columnEnd);
+			compute(rowStart, rowEnd, columnStart, columnEnd, columns);
 			}
 		);
 	}
