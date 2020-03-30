@@ -1,6 +1,7 @@
 #pragma once
 
 #include <tbb/parallel_for.h>
+#include <tbb/task_scheduler_init.h>
 
 class StripesSchema
 {
@@ -19,7 +20,7 @@ private:
 
 	int threadsNumber;
 
-	void compute(int rowStart, int rowEnd, int columnStart, int columnEnd);
-	double calculateEntry(int i, int j);
+	void compute(int rowStart, int rowEnd, int columnStart, int columnEnd, int size);
+	double calculateEntry(int i, int j, int size);
 };
 

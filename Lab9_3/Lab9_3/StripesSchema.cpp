@@ -11,24 +11,41 @@ StripesSchema::StripesSchema(double** A, double** B, int rows, int columns, int 
 double** StripesSchema::calculateProduct()
 {
 	int taskSize = rows / threadsNumber;
-	/*
+	tbb::task_scheduler_init init(threadsNumber);
+	int rowStart, rowEnd, columnStart, columnEnd;
+
 	for (int i = 0; i < threadsNumber; i++) {
-		tbb::parallel_for(tbb::blocked_range<int>(0, threadsNumber), [&](tbb::blocked_range<int> r) {
+		tbb::parallel_for(0, threadsNumber, 1, [&](int j) {
+			rowStart = j * taskSize;
+			rowEnd = (j == threadsNumber - 1) ? rows : (j + 1) * taskSize;
 
+			columnStart = ((i + j) % threadsNumber) * taskSize;
+			columnEnd = (columnStart / taskSize == threadsNumber - 1) ? rows : (columnStart + taskSize);
+
+			compute(rowStart, rowEnd, columnStart, columnEnd);
 			}
-
+		);
 	}
-	*/
 
-	return nullptr;
+
+	return C;
 }
 
-void StripesSchema::compute(int rowStart, int rowEnd, int columnStart, int columnEnd)
+void StripesSchema::compute(int rowStart, int rowEnd, int columnStart, int columnEnd, int size)
 {
+	for (int i = rowStart; i < rowEnd; i++) {
+		for (int j = columnStart; j < columnEnd; j++) {
+			C[i][j] = calculateEntry(i, j, size);
+		}
+	}
 }
 
-double StripesSchema::calculateEntry(int i, int j)
+double StripesSchema::calculateEntry(int i, int j, int size)
 {
-	return 0.0;
+	double result = 0.0;
+	for (int k = 0; k < size; k++) {
+		result += A[i][k] * B[k][j];
+	}
+	return result;
 }
 
