@@ -14,7 +14,8 @@ double** StripesSchema::calculateProduct()
 
 
 	for (int i = 0; i < threadsNumber; i++) {
-#pragma omp parallel num_threads(threadsNumber) for
+#pragma omp parallel num_threads(threadsNumber)
+#pragma omp for
 		for (int j = 0; j < threadsNumber; j++) {
 			int rowStart, rowEnd, columnStart, columnEnd;
 
