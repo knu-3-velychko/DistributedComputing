@@ -14,10 +14,6 @@ public class Controller {
 
     private Thread thread1, thread2;
 
-    private double position = 50.0;
-
-    private volatile boolean flag = true;
-
     @FXML
     private void initialize() {
         priorityThread1.setValueFactory(
@@ -39,20 +35,20 @@ public class Controller {
 
     private Thread initializeThread(double targetPosition) {
         return new Thread(() -> {
-            while (flag) {
-                Thread.yield();
-                if ((int) position < (int) targetPosition)
-                    position++;
-                else
-                    position--;
-                Platform.runLater(() -> {
-                    slider.setValue(position);
-                    sliderValue.setText(Double.toString(position));
-                });
-                try {
-                    Thread.sleep(10);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+            while (!Thread.currentThread().isInterrupted()) {
+                synchronized (slider) {
+                    Platform.runLater(() -> {
+                        if (slider.getValue() < targetPosition)
+                            slider.setValue(slider.getValue() + 1);
+                        else
+                            slider.setValue(slider.getValue() - 1);
+                        sliderValue.setText(Double.toString(slider.getValue()));
+                    });
+                    try {
+                        Thread.sleep(5);
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
                 }
             }
         });
@@ -65,6 +61,9 @@ public class Controller {
         thread1.setDaemon(true);
         thread2.setDaemon(true);
 
+        thread1.setPriority(priorityThread1.getValue());
+        thread2.setPriority(priorityThread2.getValue());
+
         priorityThread1.valueProperty().addListener(
                 (observableValue, integer, newValue) -> thread1.setPriority(newValue));
 
@@ -73,19 +72,21 @@ public class Controller {
     }
 
     private void startThreads() {
-        if (thread1 == null || thread2 == null || !thread1.isAlive() || !thread2.isAlive()){
+        if (thread1 == null || thread2 == null || !thread1.isAlive() || !thread2.isAlive()) {
             initializeThreads();
             button.setText("Stop");
-            position=slider.getValue();
             slider.setDisable(true);
             thread1.start();
             thread2.start();
-            flag = true;
-        }
-        else {
+        } else {
             button.setText("Start");
             slider.setDisable(false);
-            flag=false;
+            try {
+                thread1.interrupt();
+                thread2.interrupt();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
