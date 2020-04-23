@@ -121,10 +121,10 @@ public class TableCreator {
 
             fw.write(STYLE);
 
-            fw.write(String.format(TABLE, generateReport("Sequential", splitted, 0)));
-            fw.write(String.format(TABLE, generateReport("Cannon", splitted, 24)));
-            fw.write(String.format(TABLE, generateReport("Fox", splitted, 48)));
-            fw.write(String.format(TABLE, generateReport("String", splitted, 72)));
+            fw.write(String.format(TABLE, generateReport("Sequential Method", splitted, 0)));
+            fw.write(String.format(TABLE, generateReport("Cannon Method", splitted, 24)));
+            fw.write(String.format(TABLE, generateReport("Fox Method", splitted, 48)));
+            fw.write(String.format(TABLE, generateReport("Stripes Method", splitted, 72)));
 
         } catch (IOException e) {
             e.printStackTrace();

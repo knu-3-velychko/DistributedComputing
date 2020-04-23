@@ -10,16 +10,16 @@ public class Logger {
     public static void log(String name, int size, int cores, long score) {
         switch (name) {
             case "B":
-                System.out.print("Simple");
+                System.out.print("Sequential Method");
                 break;
             case "S":
-                System.out.print("String");
+                System.out.print("Stripes Method");
                 break;
             case "F":
-                System.out.print("Fox   ");
+                System.out.print("Fox Method");
                 break;
             case "C":
-                System.out.print("Cannon");
+                System.out.print("Cannon Method");
                 break;
         }
 
