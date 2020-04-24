@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="016cf8cd-f96d-4f02-8bf3-650575ef5b02" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Test.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MatrixGenerator.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Program.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/HtmlBuilder.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/StripesSchema.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/StripesSchema.cs" />
+        <option value="$PROJECT_DIR$/Program.cs" />
+        <option value="$PROJECT_DIR$/HtmlBuilder.cs" />
+        <option value="$PROJECT_DIR$/Test.cs" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="1ZkUdc9CvoJSEJmBBTB1nTmo5xd" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="Rider.SolutionExplorerActivator" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="TWShift.3" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="settings.editor.selected.configurable" value="dotNetConsole" />
+  </component>
+  <component name="RunManager">
+    <configuration name="Lab9_5" type="DotNetProject" factoryName=".NET Project">
+      <option name="EXE_PATH" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="USE_MONO" value="0" />
+      <option name="RUNTIME_ARGUMENTS" value="" />
+      <option name="PROJECT_PATH" value="$PROJECT_DIR$/Lab9_5.csproj" />
+      <option name="PROJECT_EXE_PATH_TRACKING" value="1" />
+      <option name="PROJECT_ARGUMENTS_TRACKING" value="1" />
+      <option name="PROJECT_WORKING_DIRECTORY_TRACKING" value="1" />
+      <option name="PROJECT_KIND" value="DotNetCore" />
+      <option name="PROJECT_TFM" value="" />
+      <method v="2">
+        <option name="Build" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="016cf8cd-f96d-4f02-8bf3-650575ef5b02" name="Default Changelist" comment="" />
+      <created>1585382674477</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1585382674477</updated>
+      <workItem from="1585382678953" duration="132000" />
+      <workItem from="1585382883639" duration="412000" />
+      <workItem from="1585383381061" duration="43000" />
+      <workItem from="1585383473866" duration="99000" />
+      <workItem from="1585386482310" duration="2605000" />
+      <workItem from="1585399490393" duration="689000" />
+      <workItem from="1585402468743" duration="4241000" />
+      <workItem from="1585568134521" duration="2403000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state width="1237" height="414" key="GridCell.Tab.0.bottom" timestamp="1585572276709">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state width="1237" height="414" key="GridCell.Tab.0.bottom/1280.72.1366.728/0.0.1280.984@0.0.1280.984" timestamp="1585572276709" />
+    <state width="1237" height="414" key="GridCell.Tab.0.center" timestamp="1585572276709">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state width="1237" height="414" key="GridCell.Tab.0.center/1280.72.1366.728/0.0.1280.984@0.0.1280.984" timestamp="1585572276709" />
+    <state width="1237" height="414" key="GridCell.Tab.0.left" timestamp="1585572276709">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state width="1237" height="414" key="GridCell.Tab.0.left/1280.72.1366.728/0.0.1280.984@0.0.1280.984" timestamp="1585572276709" />
+    <state width="1237" height="414" key="GridCell.Tab.0.right" timestamp="1585572276709">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state width="1237" height="414" key="GridCell.Tab.0.right/1280.72.1366.728/0.0.1280.984@0.0.1280.984" timestamp="1585572276709" />
+    <state x="232" y="224" key="Rider.ProjectTemplateDialog.Size" timestamp="1585385502831">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state x="232" y="224" key="Rider.ProjectTemplateDialog.Size/1280.72.1366.728/0.0.1280.984@0.0.1280.984" timestamp="1585385502831" />
+    <state x="141" y="134" key="SettingsEditor" timestamp="1585383563135">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state x="141" y="134" key="SettingsEditor/1280.72.1366.728/0.0.1280.984@0.0.1280.984" timestamp="1585383563135" />
+  </component>
+</project>

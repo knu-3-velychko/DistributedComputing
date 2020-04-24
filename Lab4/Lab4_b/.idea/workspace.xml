@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="a7b0066d-ae5b-4a31-b4be-28cd91617b75" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1Xa866P35loMlAraX8o2kflbRr4" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="Lab4_b.main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a7b0066d-ae5b-4a31-b4be-28cd91617b75" name="Default Changelist" comment="" />
+      <created>1581272666776</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1581272666776</updated>
+      <workItem from="1581272672658" duration="3244000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="1555" y="95" key="#Project_Structure" timestamp="1581272719855">
+      <screen x="1280" y="72" width="1366" height="728" />
+    </state>
+    <state x="1555" y="95" key="#Project_Structure/1280.72.1366.728/0.0.1280.984@1280.72.1366.728" timestamp="1581272719855" />
+    <state x="1768" y="146" key="#com.intellij.ide.util.MemberChooser" timestamp="1581272803403">
+      <screen x="1280" y="72" width="1366" height="728" />
+    </state>
+    <state x="1768" y="146" key="#com.intellij.ide.util.MemberChooser/1280.72.1366.728/0.0.1280.984@1280.72.1366.728" timestamp="1581272803403" />
+    <state width="1323" height="195" key="GridCell.Tab.0.bottom" timestamp="1581275842725">
+      <screen x="1280" y="72" width="1366" height="728" />
+    </state>
+    <state width="1323" height="195" key="GridCell.Tab.0.bottom/1280.72.1366.728/0.0.1280.984@1280.72.1366.728" timestamp="1581275842725" />
+    <state width="1323" height="195" key="GridCell.Tab.0.center" timestamp="1581275842725">
+      <screen x="1280" y="72" width="1366" height="728" />
+    </state>
+    <state width="1323" height="195" key="GridCell.Tab.0.center/1280.72.1366.728/0.0.1280.984@1280.72.1366.728" timestamp="1581275842725" />
+    <state width="1323" height="195" key="GridCell.Tab.0.left" timestamp="1581275842724">
+      <screen x="1280" y="72" width="1366" height="728" />
+    </state>
+    <state width="1323" height="195" key="GridCell.Tab.0.left/1280.72.1366.728/0.0.1280.984@1280.72.1366.728" timestamp="1581275842724" />
+    <state width="1323" height="195" key="GridCell.Tab.0.right" timestamp="1581275842725">
+      <screen x="1280" y="72" width="1366" height="728" />
+    </state>
+    <state width="1323" height="195" key="GridCell.Tab.0.right/1280.72.1366.728/0.0.1280.984@1280.72.1366.728" timestamp="1581275842725" />
+    <state x="1658" y="261" key="com.intellij.ide.util.TipDialog" timestamp="1581272675121">
+      <screen x="1280" y="72" width="1366" height="728" />
+    </state>
+    <state x="1658" y="261" key="com.intellij.ide.util.TipDialog/1280.72.1366.728/0.0.1280.984@1280.72.1366.728" timestamp="1581272675121" />
+  </component>
+</project>

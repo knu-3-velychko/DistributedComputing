@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\Taya\.Rider2019.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\Taya\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_Lab9_5.670113077.00" t="ExcludeRecursive" />
+    <e p="C:\Users\Taya\Documents\Projects\DistributedComputing\Lab9_5" t="IncludeRecursive">
+      <e p="bin" t="ExcludeRecursive" />
+      <e p="HtmlBuilder.cs" t="Include" />
+      <e p="Lab9_5.csproj" t="IncludeRecursive" />
+      <e p="Lab9_5.sln" t="IncludeFlat" />
+      <e p="MatrixGenerator.cs" t="Include" />
+      <e p="obj" t="ExcludeRecursive">
+        <e p="Debug" t="Include">
+          <e p="netcoreapp3.1" t="Include">
+            <e p="Lab9_5.AssemblyInfo.cs" t="Include" />
+          </e>
+        </e>
+      </e>
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="Program.cs" t="Include" />
+      <e p="StripesSchema.cs" t="Include" />
+      <e p="Test.cs" t="Include" />
+    </e>
+  </component>
+</project>

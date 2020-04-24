@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="d6419024-6b35-4241-ac50-1faaa43cdc8a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../Lab6_2/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Lab6_2/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Lab6_2/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Lab6_2/src/main/java/GameTable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Lab6_2/src/main/java/LifeGame.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="FxmlFile" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1Xsz5omXaaegShp1ltlVpJhwA0T" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+  </component>
+  <component name="RunManager" selected="Application.LifeGame">
+    <configuration name="LifeGame" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="LifeGame" />
+      <module name="Lab6_1.main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="Lab6_1.main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.LifeGame" />
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d6419024-6b35-4241-ac50-1faaa43cdc8a" name="Default Changelist" comment="" />
+      <created>1581849409865</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1581849409865</updated>
+      <workItem from="1581849416826" duration="8116000" />
+      <workItem from="1581874168032" duration="6561000" />
+      <workItem from="1581928392729" duration="13312000" />
+      <workItem from="1581954268856" duration="3719000" />
+      <workItem from="1581969758870" duration="4921000" />
+      <workItem from="1582032202006" duration="8148000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="445" y="202" key="#com.intellij.ide.util.MemberChooser" timestamp="1581951126931">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state x="445" y="202" key="#com.intellij.ide.util.MemberChooser/1280.72.1366.728/0.0.1280.984@0.0.1280.984" timestamp="1581951126931" />
+    <state x="370" y="240" key="#com.intellij.refactoring.typeMigration.ui.FailedConversionsDialog" timestamp="1582036914326">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state x="370" y="240" key="#com.intellij.refactoring.typeMigration.ui.FailedConversionsDialog/1280.72.1366.728/0.0.1280.984@0.0.1280.984" timestamp="1582036914326" />
+    <state width="1237" height="278" key="GridCell.Tab.0.bottom" timestamp="1582047454190">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state width="1237" height="278" key="GridCell.Tab.0.bottom/1280.72.1366.728/0.0.1280.984@0.0.1280.984" timestamp="1582047454190" />
+    <state width="1237" height="278" key="GridCell.Tab.0.center" timestamp="1582047454190">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state width="1237" height="278" key="GridCell.Tab.0.center/1280.72.1366.728/0.0.1280.984@0.0.1280.984" timestamp="1582047454190" />
+    <state width="1237" height="278" key="GridCell.Tab.0.left" timestamp="1582047454189">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state width="1237" height="278" key="GridCell.Tab.0.left/1280.72.1366.728/0.0.1280.984@0.0.1280.984" timestamp="1582047454189" />
+    <state width="1237" height="278" key="GridCell.Tab.0.right" timestamp="1582047454190">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state width="1237" height="278" key="GridCell.Tab.0.right/1280.72.1366.728/0.0.1280.984@0.0.1280.984" timestamp="1582047454190" />
+    <state x="335" y="317" key="com.intellij.ide.util.TipDialog" timestamp="1582036593977">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state x="335" y="317" key="com.intellij.ide.util.TipDialog/1280.72.1366.728/0.0.1280.984@0.0.1280.984" timestamp="1582036593977" />
+    <state x="411" y="196" key="com.intellij.testIntegration.createTest.CreateTestDialog" timestamp="1581931619180">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state x="411" y="196" key="com.intellij.testIntegration.createTest.CreateTestDialog/1280.72.1366.728/0.0.1280.984@0.0.1280.984" timestamp="1581931619180" />
+    <state x="22" y="105" key="new project wizard" timestamp="1582046114878">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state x="22" y="105" key="new project wizard/1280.72.1366.728/0.0.1280.984@0.0.1280.984" timestamp="1582046114878" />
+  </component>
+</project>
